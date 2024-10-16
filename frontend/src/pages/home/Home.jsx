@@ -4,6 +4,7 @@ import './Home.scss';
 import { productData } from '../../components/carousel/data';
 import CarouselItem from '../../components/carousel/CarouselItem';
 import ProductCarousel from '../../components/carousel/Carousel';
+import ProductCategory from './ProductCategory';
 
 function PageHeading({ heading, btnText }) {
   return (
@@ -37,6 +38,20 @@ function Home() {
         <div className='container'>
           <HomeInfoBox />
           <PageHeading heading='Latest Products' btnText='Shop Now >>>' />
+          <ProductCarousel products={productss} />
+        </div>
+      </section>
+
+      <section className='--bg-grey'>
+        <div className='container'>
+          <h3>Categories</h3>
+          <ProductCategory />
+        </div>
+      </section>
+
+      <section>
+        <div className='container'>
+          <PageHeading heading='Mobile Phones' btnText='Shop Now >>>' />
           <ProductCarousel products={productss} />
         </div>
       </section>

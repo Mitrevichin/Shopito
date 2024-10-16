@@ -1,11 +1,16 @@
 export const responsive = {
   desktop: {
-    breakpoint: { max: 3000, min: 1024 },
+    breakpoint: { max: 3000, min: 1200 },
     items: 4,
     slidesToSlide: 1, // optional, default to 1.
   },
+  desktopSmall: {
+    breakpoint: { max: 1200, min: 900 },
+    items: 3,
+    slidesToSlide: 1, // optional, default to 1.
+  },
   tablet: {
-    breakpoint: { max: 1024, min: 464 },
+    breakpoint: { max: 900, min: 464 },
     items: 2,
     slidesToSlide: 1, // optional, default to 1.
   },
