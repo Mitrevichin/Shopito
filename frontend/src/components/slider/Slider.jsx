@@ -3,6 +3,7 @@ import './Slider.scss';
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useCallback } from 'react';
 
 function Slider() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -11,19 +12,6 @@ function Slider() {
   const slideLength = sliderData.length;
   const autoScroll = true;
   const intervalTime = 5000;
-  let slideInterval;
-
-  useEffect(() => {
-    setCurrentSlide(0);
-  }, []);
-
-  useEffect(() => {
-    if (autoScroll) {
-      slideInterval = setInterval(nextSlide, intervalTime);
-    }
-
-    return () => clearInterval(slideInterval);
-  }, [autoScroll, nextSlide]);
 
   function prevSlide() {
     setCurrentSlide(currentSlide =>
@@ -31,11 +19,25 @@ function Slider() {
     );
   }
 
-  function nextSlide() {
+  const nextSlide = useCallback(() => {
     setCurrentSlide(currentSlide =>
       currentSlide === slideLength - 1 ? 0 : currentSlide + 1
     );
-  }
+  }, [slideLength]);
+
+  useEffect(() => {
+    setCurrentSlide(0);
+  }, []);
+
+  useEffect(() => {
+    let slideInterval;
+
+    if (autoScroll) {
+      slideInterval = setInterval(nextSlide, intervalTime);
+    }
+
+    return () => clearInterval(slideInterval);
+  }, [autoScroll, nextSlide]);
 
   return (
     <div className='slider'>
