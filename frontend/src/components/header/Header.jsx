@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { FaCartShopping } from 'react-icons/fa6';
 import { HiOutlineMenuAlt3 } from 'react-icons/hi';
@@ -9,6 +9,20 @@ const activeLink = ({ isActive }) => (isActive ? styles.active : '');
 
 function Header() {
   const [showMenu, setShowMenu] = useState(false);
+  const [scrollPage, setScrollPage] = useState(false);
+
+  useEffect(() => {
+    function fixNabar() {
+      if (window.scrollY > 50) {
+        setScrollPage(true);
+      } else {
+        setScrollPage(false);
+      }
+    }
+    window.addEventListener('scroll', fixNabar);
+
+    () => window.removeEventListener('scroll', fixNabar);
+  }, []);
 
   function toggleMenu() {
     setShowMenu(showMenu => !showMenu);
@@ -19,7 +33,7 @@ function Header() {
   }
 
   return (
-    <header>
+    <header className={scrollPage ? styles.fixed : ''}>
       <div className={styles.header}>
         <Logo />
 
