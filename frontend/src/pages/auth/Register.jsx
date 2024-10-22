@@ -3,6 +3,10 @@ import loginImg from '../../assets/login.png';
 import Card from '../../components/card/Card';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { validateEmail } from '../../utils';
+import { useDispatch } from 'react-redux';
+import { register } from '../../redux/features/auth/authSlice';
 
 const initialState = {
   name: '',
@@ -12,10 +16,35 @@ const initialState = {
 };
 
 function Register() {
-  const [formData, setFormData] = useState('initialState');
+  const [formData, setFormData] = useState(initialState);
   const { name, email, password, cPassword } = formData;
+  const dispatch = useDispatch();
 
-  function registerUser() {}
+  async function registerUser(e) {
+    e.preventDefault();
+
+    // Validate fields
+    if (!password || !email || !name) {
+      return toast.error('All fields are required');
+    }
+    if (password.length < 6) {
+      return toast.error('Password must be at least 6 characters');
+    }
+    if (!validateEmail(email)) {
+      return toast.error('Please enter a valid email');
+    }
+    if (password !== cPassword) {
+      return toast.error('Passwords do not match!');
+    }
+
+    const userData = {
+      name,
+      email,
+      password,
+    };
+
+    await dispatch(register(userData));
+  }
 
   function handleInputChange(e) {
     const { name, value } = e.target;
@@ -42,7 +71,7 @@ function Register() {
               placeholder='Email'
               required
               value={email}
-              name={email}
+              name='email'
               onChange={handleInputChange}
             />
             <input
@@ -50,11 +79,11 @@ function Register() {
               placeholder='Password'
               required
               value={password}
-              name={password}
+              name='password'
               onChange={handleInputChange}
             />
             <input
-              type='text'
+              type='password'
               placeholder='Confirm password'
               required
               value={cPassword}
