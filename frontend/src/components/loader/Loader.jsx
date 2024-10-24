@@ -13,6 +13,8 @@ function Loader() {
   );
 }
 
+export default Loader;
+
 export function Spinner() {
   return (
     <div className='--center-all'>
@@ -20,5 +22,3 @@ export function Spinner() {
     </div>
   );
 }
-
-export default Loader;
