@@ -43,6 +43,20 @@ export const login = createAsyncThunk(
   }
 );
 
+// Logout User
+export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
+  try {
+    return await authService.logout();
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
 const initialState = {
   isLoggedIn: false,
   user: null,
@@ -86,7 +100,6 @@ const authSlice = createSlice({
         state.message = action.payload;
         toast.error(action.payload);
       })
-
       // Login User
       .addCase(login.pending, state => {
         state.isLoading = true;
@@ -100,6 +113,24 @@ const authSlice = createSlice({
         console.log('Action payload:', action.payload); // Check the server response
       })
       .addCase(login.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.user = null;
+        state.message = action.payload;
+        toast.error(action.payload);
+      })
+      // Logout User
+      .addCase(logout.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(logout.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isLoggedIn = false;
+        state.user = null;
+        toast.success(action.payload);
+      })
+      .addCase(logout.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.user = null;
