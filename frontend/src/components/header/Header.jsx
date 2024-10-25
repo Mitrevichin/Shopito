@@ -6,6 +6,7 @@ import { FaTimes } from 'react-icons/fa';
 import styles from './Header.module.scss';
 import { useDispatch } from 'react-redux';
 import { logout, RESET_AUTH } from '../../redux/features/auth/authSlice';
+import ShowOnLogin, { ShowOnLogout } from '../hiddenLink/HiddenLink';
 
 const activeLink = ({ isActive }) => (isActive ? styles.active : '');
 
@@ -72,18 +73,21 @@ function Header() {
 
           <div className={styles['header-right']}>
             <span className={styles.links}>
-              <NavLink to='/login' className={activeLink}>
-                Login
-              </NavLink>
-              <NavLink to='/register' className={activeLink}>
-                Register
-              </NavLink>
-              <NavLink to='/order-history' className={activeLink}>
-                My Order
-              </NavLink>
-              <Link to='/' onClick={logoutUser}>
-                Logout
-              </Link>
+              <ShowOnLogout>
+                <NavLink to='/login' className={activeLink}>
+                  Login
+                </NavLink>
+                <NavLink to='/register' className={activeLink}>
+                  Register
+                </NavLink>
+              </ShowOnLogout>
+
+              <ShowOnLogin>
+                <NavLink to='/order-history' className={activeLink}>
+                  My Order
+                </NavLink>
+                <Link onClick={logoutUser}>Logout</Link>
+              </ShowOnLogin>
             </span>
 
             <Cart />
