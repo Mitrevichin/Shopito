@@ -27,11 +27,32 @@ async function getLoginStatus() {
   return res.data;
 }
 
+// Get User
+async function getUser() {
+  const res = await axios.get(API_URL + 'getUser');
+  return res.data;
+}
+
+// Update User Profile
+async function updateUser(userData) {
+  const res = await axios.patch(API_URL + 'updateUser', userData);
+  return res.data;
+}
+
+// Update User Photo
+async function updatePhoto(userData) {
+  const res = await axios.patch(API_URL + 'updatePhoto', userData);
+  return res.data;
+}
+
 const authService = {
   register,
   login,
   logout,
   getLoginStatus,
+  getUser,
+  updateUser,
+  updatePhoto,
 };
 
 export default authService;
