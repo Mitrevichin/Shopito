@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FaCartShopping } from 'react-icons/fa6';
 import { HiOutlineMenuAlt3 } from 'react-icons/hi';
+import { FaUserCircle } from 'react-icons/fa';
 import { FaTimes } from 'react-icons/fa';
 import styles from './Header.module.scss';
 import { useDispatch } from 'react-redux';
 import { logout, RESET_AUTH } from '../../redux/features/auth/authSlice';
 import ShowOnLogin, { ShowOnLogout } from '../hiddenLink/HiddenLink';
+import { UserName } from '../../pages/profile/Profile';
 
 const activeLink = ({ isActive }) => (isActive ? styles.active : '');
 
@@ -73,6 +75,11 @@ function Header() {
 
           <div className={styles['header-right']}>
             <span className={styles.links}>
+              <ShowOnLogin>
+                <NavLink to='/profile' className={activeLink}>
+                  <FaUserCircle size={16} color='#ff7722' /> <UserName />
+                </NavLink>
+              </ShowOnLogin>
               <ShowOnLogout>
                 <NavLink to='/login' className={activeLink}>
                   Login
