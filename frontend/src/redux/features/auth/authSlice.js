@@ -181,7 +181,7 @@ const authSlice = createSlice({
         state.isLoggedIn = true;
         state.user = action.payload;
         toast.success('Login successful');
-        console.log('Action payload:', action.payload); // Check the server response
+        // console.log('Action payload:', action.payload); // Check the server response
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
@@ -234,7 +234,7 @@ const authSlice = createSlice({
         state.isSuccess = true;
         state.isLoggedIn = true;
         state.user = action.payload;
-        console.log(action.payload)
+        console.log(action.payload);
       })
       .addCase(getUser.rejected, (state, action) => {
         state.isLoading = false;

@@ -33,8 +33,6 @@ function Login() {
       password,
     };
 
-    console.log(userData);
-
     await dispatch(login(userData));
   }
 
@@ -48,6 +46,7 @@ function Login() {
   return (
     <>
       {isLoading && <Loader />}
+
       <section className={`container ${styles.auth}`}>
         <div className={styles.img}>
           <img src={loginImg} alt='Login' width={400} />

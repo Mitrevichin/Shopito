@@ -19,6 +19,7 @@ const initialState = {
 function Register() {
   const [formData, setFormData] = useState(initialState);
   const { name, email, password, cPassword } = formData;
+
   const { isLoading, isLoggedIn, isSuccess } = useSelector(state => state.auth);
 
   const navigate = useNavigate();
@@ -65,6 +66,7 @@ function Register() {
   return (
     <>
       {isLoading && <Loader />}
+
       <section className={`container ${styles.auth}`}>
         <Card>
           <div className={styles.form}>
@@ -80,7 +82,7 @@ function Register() {
                 onChange={handleInputChange}
               />
               <input
-                type='text'
+                type='email'
                 placeholder='Email'
                 required
                 value={email}

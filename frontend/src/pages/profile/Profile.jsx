@@ -17,7 +17,6 @@ const upload_preset = import.meta.env.VITE_UPLOAD_PRESET;
 const cloud_url = 'https://api.cloudinary.com/v1_1/dy1ppo3wm/image/upload';
 
 function Profile() {
-  const { isLoading, user } = useSelector(state => state.auth);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -26,10 +25,12 @@ function Profile() {
   const [address, setAddress] = useState('');
   const [state, setState] = useState('');
   const [country, setCountry] = useState('');
+
   const [profileImage, setProfileImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
   const dispatch = useDispatch();
+  const { isLoading, user } = useSelector(state => state.auth);
 
   useEffect(() => {
     if (user === null) dispatch(getUser());
@@ -140,6 +141,7 @@ function Profile() {
     <>
       <section>
         {isLoading && <Loader />}
+
         <div className='container'>
           <PageMenu />
           <h2>Profile</h2>
