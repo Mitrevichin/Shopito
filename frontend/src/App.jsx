@@ -7,13 +7,15 @@ import Register from './pages/auth/Register';
 import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { getLoginStatus } from './redux/features/auth/authSlice';
+import { getLoginStatus, getUser } from './redux/features/auth/authSlice';
 import Profile from './pages/profile/Profile';
+import Admin from './pages/Admin/Admin';
 
 function App() {
   axios.defaults.withCredentials = true;
+  const { isLoggedIn, user } = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
   /*
@@ -24,6 +26,12 @@ function App() {
   useEffect(() => {
     dispatch(getLoginStatus());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (isLoggedIn && user === null) {
+      dispatch(getUser());
+    }
+  }, [dispatch, isLoggedIn, user]);
 
   return (
     <>
@@ -36,6 +44,8 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/profile' element={<Profile />} />
+
+          <Route path='/admin/*' element={<Admin />} />
         </Routes>
 
         <Footer />

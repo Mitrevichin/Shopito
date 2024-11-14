@@ -71,14 +71,19 @@ function Header() {
                 Shop
               </NavLink>
             </li>
+            <li>
+              <NavLink to='/admin/home' className={activeLink}>
+                | Admin
+              </NavLink>
+            </li>
           </ul>
 
           <div className={styles['header-right']}>
             <span className={styles.links}>
               <ShowOnLogin>
-                <NavLink to='/profile' className={activeLink}>
+                <Link to='/profile' className={activeLink}>
                   <FaUserCircle size={16} color='#ff7722' /> <UserName />
-                </NavLink>
+                </Link>
               </ShowOnLogin>
               <ShowOnLogout>
                 <NavLink to='/login' className={activeLink}>
