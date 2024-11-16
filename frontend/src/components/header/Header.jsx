@@ -5,8 +5,12 @@ import { HiOutlineMenuAlt3 } from 'react-icons/hi';
 import { FaUserCircle } from 'react-icons/fa';
 import { FaTimes } from 'react-icons/fa';
 import styles from './Header.module.scss';
-import { useDispatch } from 'react-redux';
-import { logout, RESET_AUTH } from '../../redux/features/auth/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  logout,
+  RESET_AUTH,
+  selectUser,
+} from '../../redux/features/auth/authSlice';
 import ShowOnLogin, { ShowOnLogout } from '../hiddenLink/HiddenLink';
 import { UserName } from '../../pages/profile/Profile';
 
@@ -15,6 +19,7 @@ const activeLink = ({ isActive }) => (isActive ? styles.active : '');
 function Header() {
   const [showMenu, setShowMenu] = useState(false);
   const [scrollPage, setScrollPage] = useState(false);
+  const { isLoggedIn, user } = useSelector(state => state.auth);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -71,11 +76,13 @@ function Header() {
                 Shop
               </NavLink>
             </li>
-            <li>
-              <NavLink to='/admin/home' className={activeLink}>
-                | Admin
-              </NavLink>
-            </li>
+            {(isLoggedIn && user.role) === 'admin' && (
+              <li>
+                <NavLink to='/admin/home' className={activeLink}>
+                  | Admin
+                </NavLink>
+              </li>
+            )}
           </ul>
 
           <div className={styles['header-right']}>

@@ -27,6 +27,11 @@ function Navbar() {
               Home
             </NavLink>
           </li>
+          <li>
+            <NavLink to='/admin/category' className={activeLink}>
+              Category
+            </NavLink>
+          </li>
         </ul>
       </nav>
     </div>
