@@ -9,8 +9,15 @@ const createCategory = async formData => {
   return res.data; // return the response from the server
 };
 
+// Get Categories
+const getCategories = async () => {
+  const res = await axios.get(API_URL + 'categories/getCategories');
+  return res.data;
+};
+
 const categoryAndBrandService = {
   createCategory,
+  getCategories,
 };
 
 export default categoryAndBrandService;

@@ -21,8 +21,27 @@ export const createCategory = createAsyncThunk(
   }
 );
 
+// Get Categories
+export const getCategories = createAsyncThunk(
+  'category/getCategories',
+  async (_, thunkAPI) => {
+    try {
+      return await categoryAndBrandService.getCategories();
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const initialState = {
-  category: [],
+  categories: [],
 
   isError: false,
   isSuccess: false,
@@ -51,18 +70,32 @@ const categoryAndBrandSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        // When a category is created successfully, the action is fulfilled, and the server response (which usually contains categort information) is returned as action.payload.
-        // state.category = action.payload;
         toast.success('Category created successfully');
         console.log(action.payload);
       })
       .addCase(createCategory.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        // When the registration fails (e.g., due to validation errors, network issues), the register action is rejected, and the error message is captured in action.payload.
         state.message = action.payload;
         toast.error(action.payload);
-      });
+      }),
+      builder
+        // Get Categories
+        .addCase(getCategories.pending, state => {
+          state.isLoading = true;
+        })
+        .addCase(getCategories.fulfilled, (state, action) => {
+          state.isLoading = false;
+          state.isSuccess = true;
+          state.isError = false;
+          state.categories = action.payload;
+        })
+        .addCase(getCategories.rejected, (state, action) => {
+          state.isLoading = false;
+          state.isError = true;
+          state.message = action.payload;
+          toast.error(action.payload);
+        });
   },
 });
 
