@@ -14,7 +14,9 @@ import {
 import ShowOnLogin, { ShowOnLogout } from '../hiddenLink/HiddenLink';
 import { UserName } from '../../pages/profile/Profile';
 
-const activeLink = ({ isActive }) => (isActive ? styles.active : '');
+// const activeLink = ({ isActive }) => (isActive ? styles.active : '');
+const activeLink = ({ isActive }) =>
+  isActive ? styles?.active || 'active' : '';
 
 function Header() {
   const [showMenu, setShowMenu] = useState(false);
@@ -76,7 +78,7 @@ function Header() {
                 Shop
               </NavLink>
             </li>
-            {(isLoggedIn && user.role) === 'admin' && (
+            {(isLoggedIn && user?.role) === 'admin' && (
               <li>
                 <NavLink to='/admin/home' className={activeLink}>
                   | Admin
@@ -88,9 +90,9 @@ function Header() {
           <div className={styles['header-right']}>
             <span className={styles.links}>
               <ShowOnLogin>
-                <Link to='/profile' className={activeLink}>
+                <NavLink to='/profile' className={activeLink}>
                   <FaUserCircle size={16} color='#ff7722' /> <UserName />
-                </Link>
+                </NavLink>
               </ShowOnLogin>
               <ShowOnLogout>
                 <NavLink to='/login' className={activeLink}>

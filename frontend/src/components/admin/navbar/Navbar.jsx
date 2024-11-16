@@ -4,7 +4,8 @@ import styles from './Navbar.module.scss';
 import { FaUserCircle } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 
-const activeLink = ({ isActive }) => (isActive ? styles.active : '');
+// const activeLink = ({ isActive }) => (isActive ? styles.active : '');
+const activeLink = ({ isActive }) => (isActive && styles.active) || '';
 
 function Navbar() {
   /* 

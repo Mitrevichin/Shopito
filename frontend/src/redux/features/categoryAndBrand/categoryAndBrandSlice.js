@@ -54,6 +54,7 @@ const categoryAndBrandSlice = createSlice({
         // When a category is created successfully, the action is fulfilled, and the server response (which usually contains categort information) is returned as action.payload.
         // state.category = action.payload;
         toast.success('Category created successfully');
+        console.log(action.payload);
       })
       .addCase(createCategory.rejected, (state, action) => {
         state.isLoading = false;
