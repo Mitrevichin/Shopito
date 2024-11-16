@@ -23,9 +23,19 @@ function CreateCategory() {
 
     const formData = { name };
 
-    dispatch(createCategory(formData));
-    dispatch(getCategories());
-    setName('');
+    try {
+      // Wait for createCategory to finish before dispatching getCategories
+      await dispatch(createCategory(formData)).unwrap();
+
+      // Dispatch getCategories after category creation is successful
+      dispatch(getCategories());
+
+      // Clear the name field
+      setName('');
+    } catch (error) {
+      console.error('Error creating category:', error);
+      toast.error('Error creating category');
+    }
   }
 
   return (
