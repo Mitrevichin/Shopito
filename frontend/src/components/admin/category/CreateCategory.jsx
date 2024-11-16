@@ -1,14 +1,18 @@
 import { useState } from 'react';
 import Card from '../../card/Card';
 import { useDispatch, useSelector } from 'react-redux';
-import { createCategory } from '../../../redux/features/categoryAndBrand/categoryAndBrandSlice';
+import {
+  createCategory,
+  getCategories,
+} from '../../../redux/features/categoryAndBrand/categoryAndBrandSlice';
 import { toast } from 'react-toastify';
 import Loader from '../../loader/Loader';
 
 function CreateCategory() {
   const [name, setName] = useState('');
-  const dispatch = useDispatch();
+
   const { isLoading } = useSelector(state => state.category);
+  const dispatch = useDispatch();
 
   async function saveCategory(e) {
     e.preventDefault();
@@ -20,6 +24,7 @@ function CreateCategory() {
     const formData = { name };
 
     dispatch(createCategory(formData));
+    dispatch(getCategories());
     setName('');
   }
 

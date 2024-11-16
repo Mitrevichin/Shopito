@@ -89,6 +89,7 @@ const categoryAndBrandSlice = createSlice({
           state.isSuccess = true;
           state.isError = false;
           state.categories = action.payload;
+          console.log(action.payload);
         })
         .addCase(getCategories.rejected, (state, action) => {
           state.isLoading = false;
