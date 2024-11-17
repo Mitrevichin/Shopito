@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../loader/Loader';
 import {
   createBrand,
+  getBrands,
   getCategories,
 } from '../../../redux/features/categoryAndBrand/categoryAndBrandSlice';
 import { toast } from 'react-toastify';
@@ -35,7 +36,16 @@ function CreateBrand() {
       category,
     };
 
-    dispatch(createBrand(formData));
+    try {
+      // Wait for createBrand to finish before dispatching getBrands
+      await dispatch(createBrand(formData)).unwrap();
+
+      dispatch(getBrands());
+      setName('');
+    } catch (error) {
+      console.error('Error creating brand:', error);
+      toast.error('Error creating brand');
+    }
   }
 
   return (

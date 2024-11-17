@@ -30,7 +30,6 @@ function CreateCategory() {
       // Dispatch getCategories after category creation is successful
       dispatch(getCategories());
 
-      // Clear the name field
       setName('');
     } catch (error) {
       console.error('Error creating category:', error);
