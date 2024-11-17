@@ -33,12 +33,19 @@ const getBrands = async () => {
   return res.data; // return the response from the server
 };
 
+// Delete Brand
+const deleteBrand = async slug => {
+  const res = await axios.delete(API_URL + `brands/${slug}`);
+  return res.data.message;
+};
+
 const categoryAndBrandService = {
   createCategory,
   getCategories,
   deleteCategory,
   createBrand,
   getBrands,
+  deleteBrand,
 };
 
 export default categoryAndBrandService;

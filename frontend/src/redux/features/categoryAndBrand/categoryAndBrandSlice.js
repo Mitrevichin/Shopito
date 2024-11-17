@@ -97,6 +97,25 @@ export const getBrands = createAsyncThunk(
   }
 );
 
+// Delete Brand
+export const deleteBrand = createAsyncThunk(
+  'brand/deleteBrand',
+  async (slug, thunkAPI) => {
+    try {
+      return await categoryAndBrandService.deleteBrand(slug);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const initialState = {
   categories: [],
   brands: [],
@@ -206,6 +225,23 @@ const categoryAndBrandSlice = createSlice({
           state.message = action.payload;
           toast.error(action.payload);
         });
+    builder
+      // Delete Brand
+      .addCase(deleteBrand.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(deleteBrand.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        toast.success(action.payload);
+      })
+      .addCase(deleteBrand.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        toast.error(action.payload);
+      });
   },
 });
 

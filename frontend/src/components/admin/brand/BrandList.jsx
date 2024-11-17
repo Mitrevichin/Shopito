@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaTrash } from 'react-icons/fa';
 import {
+  deleteBrand,
   deleteCategory,
   getBrands,
   getCategories,
@@ -38,14 +39,14 @@ function BrandList() {
 
   async function delBrand(slug) {
     try {
-      // Wait for deleteCategory to finish
-      await dispatch(deleteCategory(slug)).unwrap();
+      // Wait for deleteBrand to finish
+      await dispatch(deleteBrand(slug)).unwrap();
 
-      // Fetch updated categories after successful deletion
-      dispatch(getCategories());
+      // Fetch updated brands AFTER successful deletion
+      dispatch(getBrands());
     } catch (error) {
-      console.error('Error deleting category:', error);
-      toast.error('Error deleting category');
+      console.error('Error deleting brand:', error);
+      toast.error('Error deleting brand');
     }
   }
 
