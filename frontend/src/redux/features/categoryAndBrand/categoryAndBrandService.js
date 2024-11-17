@@ -20,10 +20,17 @@ const deleteCategory = async slug => {
   return res.data.message;
 };
 
+// Create Brand
+const createBrand = async formData => {
+  const res = await axios.post(API_URL + 'brands/createBrand', formData);
+  return res.data; // return the response from the server
+};
+
 const categoryAndBrandService = {
   createCategory,
   getCategories,
   deleteCategory,
+  createBrand,
 };
 
 export default categoryAndBrandService;

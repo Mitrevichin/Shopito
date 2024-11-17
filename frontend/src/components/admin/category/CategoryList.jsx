@@ -14,11 +14,9 @@ function CategoryList() {
   const { isLoading, categories } = useSelector(state => state.category);
   const dispatch = useDispatch();
 
-  //   const { slug } = useParams();
-
-  useEffect(() => {
-    dispatch(getCategories());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getCategories());
+  // }, [dispatch]);
 
   const confirmDelete = slug => {
     confirmAlert({
