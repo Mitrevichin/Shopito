@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import Card from '../../card/Card';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../loader/Loader';
-import { getCategories } from '../../../redux/features/categoryAndBrand/categoryAndBrandSlice';
+import {
+  createBrand,
+  getCategories,
+} from '../../../redux/features/categoryAndBrand/categoryAndBrandSlice';
+import { toast } from 'react-toastify';
 
 function CreateBrand() {
   const [name, setName] = useState('');
@@ -17,6 +21,21 @@ function CreateBrand() {
 
   async function saveBrand(e) {
     e.preventDefault();
+
+    if (name.length < 3) {
+      return toast.error('Brand name must be at least 3 characters');
+    }
+
+    if (!category) {
+      return toast.error('Please add a parent category');
+    }
+
+    const formData = {
+      name,
+      category,
+    };
+
+    dispatch(createBrand(formData));
   }
 
   return (
