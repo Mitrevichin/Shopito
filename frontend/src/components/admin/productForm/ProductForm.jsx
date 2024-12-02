@@ -7,6 +7,7 @@ function ProductForm({
   handleInputChange,
   categories,
   isEditing,
+  filteredBrands,
 }) {
   return (
     <div className='add-product'>
@@ -24,6 +25,7 @@ function ProductForm({
             value={product?.name}
             onChange={handleInputChange}
           />
+
           <label>Product Category:</label>
           <select
             name='category'
@@ -40,6 +42,26 @@ function ProductForm({
               categories.map(cat => (
                 <option key={cat._id} value={cat.name}>
                   {cat.name}
+                </option>
+              ))}
+          </select>
+
+          <label>Product Brand:</label>
+          <select
+            name='brand'
+            value={product?.brand}
+            onChange={handleInputChange}
+          >
+            {isEditing ? (
+              <option value={product?.brand}>{product?.brand}</option>
+            ) : (
+              <option>Select Brand</option>
+            )}
+
+            {filteredBrands.length > 0 &&
+              filteredBrands.map(brand => (
+                <option key={brand._id} value={brand.name}>
+                  {brand.name}
                 </option>
               ))}
           </select>

@@ -17,6 +17,8 @@ const initialState = {
 
 function AddProduct() {
   const [product, setProduct] = useState(initialState);
+  const [filteredBrands, setFilteredBrands] = useState([]);
+
   const { name, category, brand, quantity, color, price, regularPrice } =
     product;
   const { isLoading } = useSelector(state => state.product);
@@ -26,6 +28,18 @@ function AddProduct() {
   useEffect(() => {
     dispatch(getCategories());
   }, [dispatch]);
+
+  // Filtered Brands based on selected Categoty
+  function filterBrands(selectedCategory) {
+    const newBrands = brands.filter(
+      brand => brand.category === selectedCategory
+    );
+    setFilteredBrands(newBrands);
+  }
+
+  useEffect(() => {
+    filterBrands(category);
+  }, [category]);
 
   function handleInputChange(e) {
     const { name, value } = e.target;
@@ -47,6 +61,7 @@ function AddProduct() {
           handleInputChange={handleInputChange}
           categories={categories}
           isEditing={false}
+          filteredBrands={filteredBrands}
         />
       </div>
     </section>
