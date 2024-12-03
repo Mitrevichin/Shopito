@@ -3,7 +3,10 @@ import Loader from '../../../components/loader/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import ProductForm from '../productForm/ProductForm';
 import { useEffect, useState } from 'react';
-import { getCategories } from '../../../redux/features/categoryAndBrand/categoryAndBrandSlice';
+import {
+  getBrands,
+  getCategories,
+} from '../../../redux/features/categoryAndBrand/categoryAndBrandSlice';
 
 const initialState = {
   name: '',
@@ -18,6 +21,7 @@ const initialState = {
 function AddProduct() {
   const [product, setProduct] = useState(initialState);
   const [filteredBrands, setFilteredBrands] = useState([]);
+  const [description, setDescription] = useState('');
 
   const { name, category, brand, quantity, color, price, regularPrice } =
     product;
@@ -27,6 +31,7 @@ function AddProduct() {
 
   useEffect(() => {
     dispatch(getCategories());
+    dispatch(getBrands());
   }, [dispatch]);
 
   // Filtered Brands based on selected Categoty
@@ -48,6 +53,7 @@ function AddProduct() {
   async function saveProduct(e) {
     e.preventDefault();
     console.log(product);
+    console.log(description);
   }
 
   return (
@@ -62,6 +68,8 @@ function AddProduct() {
           categories={categories}
           isEditing={false}
           filteredBrands={filteredBrands}
+          description={description}
+          setDescription={setDescription}
         />
       </div>
     </section>
