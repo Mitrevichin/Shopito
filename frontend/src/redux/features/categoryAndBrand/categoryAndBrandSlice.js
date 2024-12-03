@@ -200,7 +200,7 @@ const categoryAndBrandSlice = createSlice({
           state.isSuccess = true;
           state.isError = false;
           toast.success('Brand successfully created');
-          console.log(action.payload);
+          // console.log(action.payload);
         })
         .addCase(createBrand.rejected, (state, action) => {
           state.isLoading = false;
@@ -217,7 +217,7 @@ const categoryAndBrandSlice = createSlice({
           state.isSuccess = true;
           state.isError = false;
           state.brands = action.payload;
-          console.log(action.payload);
+          // console.log(action.payload);
         })
         .addCase(getBrands.rejected, (state, action) => {
           state.isLoading = false;
