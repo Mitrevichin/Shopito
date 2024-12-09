@@ -26,6 +26,17 @@ function UploadWidget({ files, setFiles }) {
     e.target.value = '';
   }
 
+  function removeImage(image) {
+    const imageIndex = selectedImages.indexOf(image);
+
+    setSelectedImages(selectedImages =>
+      selectedImages.filter(img => img !== image)
+    );
+
+    setImages(images => images.filter((img, i) => i !== imageIndex));
+    URL.revokeObjectURL(image);
+  }
+
   return (
     <div>
       <Card cardClass={'formcard group'}>
@@ -50,7 +61,7 @@ function UploadWidget({ files, setFiles }) {
               return (
                 <div key={image} className='image'>
                   <img src={image} width={200} alt='Product Image' />
-                  <button className='-btn'>
+                  <button className='-btn' onClick={() => removeImage(image)}>
                     <FaTrash size={25} />
                   </button>
                   <p>{i + 1}</p>
