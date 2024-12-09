@@ -24,6 +24,7 @@ function AddProduct() {
   const [product, setProduct] = useState(initialState);
   const [filteredBrands, setFilteredBrands] = useState([]);
   const [description, setDescription] = useState('');
+  const [files, setFiles] = useState([]);
 
   const { name, category, brand, quantity, color, price, regularPrice } =
     product;
@@ -98,6 +99,8 @@ function AddProduct() {
           filteredBrands={filteredBrands}
           description={description}
           setDescription={setDescription}
+          files={files}
+          setFiles={setFiles}
         />
       </div>
     </section>
