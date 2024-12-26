@@ -3,6 +3,7 @@ import Card from '../../card/Card';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import UploadWidget from './UploadWidget';
+import { FaTrash } from 'react-icons/fa';
 
 function ProductForm({
   saveProduct,
@@ -16,6 +17,11 @@ function ProductForm({
   files,
   setFiles,
 }) {
+  const removeImage = image => {
+    console.log(image);
+    setFiles(files.filter((img, index) => img !== image));
+  };
+
   return (
     <div className='add-product'>
       <UploadWidget files={files} setFiles={setFiles} />
@@ -24,6 +30,29 @@ function ProductForm({
         <br />
 
         <form onSubmit={saveProduct}>
+          <label>Product Images:</label>
+          <div className='slide-container'>
+            <aside>
+              {files.length > 0 &&
+                files.map(image => (
+                  <div key={image} className='thumbnail'>
+                    <img src={image} alt='productImage' height={100} />
+                    <div>
+                      <FaTrash
+                        size={15}
+                        className='thumbnailIcon'
+                        onClick={() => removeImage(image)}
+                      />
+                    </div>
+                  </div>
+                ))}
+              {files.length < 1 && (
+                <p className='--m'>No image set for this poduct.</p>
+              )}
+            </aside>
+          </div>
+          <br />
+          <hr />
           <label>Product Name:</label>
           <input
             type='text'

@@ -111,9 +111,14 @@ function UploadWidget({ files, setFiles }) {
           <div className='--center-all'>
             <button
               className='--btn --btn-danger --btn-large'
+              disabled={uploading}
               onClick={uploadImages}
             >
-              Upload Image
+              {uploading
+                ? `Uploading... ${progress} of ${selectedImages.length}`
+                : `Upload ${selectedImages.length} Image${
+                    selectedImages.length === 1 ? '' : 's'
+                  }`}
             </button>
           </div>
         )}

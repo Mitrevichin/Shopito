@@ -9,6 +9,7 @@ import {
   getCategories,
 } from '../../../redux/features/categoryAndBrand/categoryAndBrandSlice';
 import { createProduct } from '../../../redux/features/product/productSlice';
+import { toast } from 'react-toastify';
 
 const initialState = {
   name: '',
@@ -66,6 +67,10 @@ function AddProduct() {
   async function saveProduct(e) {
     e.preventDefault();
 
+    if (files.length < 1) {
+      return toast.error('Please add an image!');
+    }
+
     const formData = {
       name,
       sku: generateSKU(category),
@@ -76,13 +81,13 @@ function AddProduct() {
       regularPrice,
       price,
       description,
-      //images
+      image: files,
     };
 
     // console.log(formData);
     await dispatch(createProduct(formData));
 
-    // navigate('admin/all-products');
+    navigate('admin/all-products');
   }
 
   return (
