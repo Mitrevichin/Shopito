@@ -19,7 +19,7 @@ function ProductForm({
 }) {
   const removeImage = image => {
     console.log(image);
-    setFiles(files.filter((img, index) => img !== image));
+    setFiles(files.filter(img => img !== image));
   };
 
   return (
