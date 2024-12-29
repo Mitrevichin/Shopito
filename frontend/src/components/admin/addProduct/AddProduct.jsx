@@ -8,7 +8,10 @@ import {
   getBrands,
   getCategories,
 } from '../../../redux/features/categoryAndBrand/categoryAndBrandSlice';
-import { createProduct } from '../../../redux/features/product/productSlice';
+import {
+  createProduct,
+  RESET_PROD,
+} from '../../../redux/features/product/productSlice';
 import { toast } from 'react-toastify';
 
 const initialState = {
@@ -29,7 +32,7 @@ function AddProduct() {
 
   const { name, category, brand, quantity, color, price, regularPrice } =
     product;
-  const { isLoading } = useSelector(state => state.product);
+  const { isLoading, message } = useSelector(state => state.product);
   const { categories, brands } = useSelector(state => state.category);
 
   const navigate = useNavigate();
@@ -89,6 +92,13 @@ function AddProduct() {
 
     navigate('admin/all-products');
   }
+
+  useEffect(() => {
+    if (message === 'Product successfully created') {
+      navigate('admin/all-products');
+      dispatch(RESET_PROD());
+    }
+  }, [dispatch, message, navigate]);
 
   return (
     <section>

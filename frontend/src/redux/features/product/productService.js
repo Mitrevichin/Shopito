@@ -15,9 +15,23 @@ const getProducts = async () => {
   return res.data;
 };
 
+// Delete Product
+const deleteProduct = async id => {
+  const res = await axios.delete(API_URL + id);
+  return res.data;
+};
+
+// Get Product
+const getProduct = async id => {
+  const res = await axios.get(API_URL + id);
+  return res.data;
+};
+
 const productService = {
   createProduct,
   getProducts,
+  deleteProduct,
+  getProduct,
 };
 
 export default productService;

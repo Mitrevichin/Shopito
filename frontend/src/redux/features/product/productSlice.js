@@ -40,6 +40,44 @@ export const getProducts = createAsyncThunk(
   }
 );
 
+// Delete Product
+export const deleteProduct = createAsyncThunk(
+  'products/deleteProduct',
+  async (id, thunkAPI) => {
+    try {
+      return await productService.deleteProduct(id);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Get Product
+export const getProduct = createAsyncThunk(
+  'products/getProduct',
+  async (id, thunkAPI) => {
+    try {
+      return await productService.getProduct(id);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const initialState = {
   product: null,
   products: [],
@@ -58,7 +96,14 @@ const initialState = {
 const productSlice = createSlice({
   name: 'product',
   initialState,
-  reducers: {},
+  reducers: {
+    RESET_PROD(state) {
+      state.isError = false;
+      state.isSuccess = false;
+      state.isLoading = false;
+      state.message = '';
+    },
+  },
   extraReducers: builder => {
     builder
       // Create Product
@@ -69,9 +114,13 @@ const productSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        state.products = action.payload;
-        toast.success('Product successfully created');
-        console.log(action.payload);
+        state.message = 'Product successfully created';
+
+        if (action.payload && action.payload.hasOwnProperty('message')) {
+          toast.error(action.payload.message);
+        } else {
+          toast.success('Product successfully created');
+        }
       })
       .addCase(createProduct.rejected, (state, action) => {
         state.isLoading = false;
@@ -95,9 +144,41 @@ const productSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
         toast.error(action.payload);
+      })
+      // Delete Product
+      .addCase(deleteProduct.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(deleteProduct.fulfilled, state => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        toast.success('Product deleted successfully');
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        toast.error(action.payload);
+      })
+      // Get Product
+      .addCase(getProduct.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(getProduct.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        state.product = action.payload;
+      })
+      .addCase(getProduct.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        toast.error(action.payload);
       });
   },
 });
 
-export const {} = productSlice.actions;
+export const { RESET_PROD } = productSlice.actions;
 export default productSlice.reducer;
