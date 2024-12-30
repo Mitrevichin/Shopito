@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-export const API_URL = `${BACKEND_URL}/api/products`;
+export const API_URL = `${BACKEND_URL}/api/products/`;
 
 // Create Product
 const createProduct = async formData => {
@@ -23,7 +23,13 @@ const deleteProduct = async id => {
 
 // Get Product
 const getProduct = async id => {
-  const res = await axios.get(API_URL + id);
+  const res = await axios.get(`${API_URL}${id}`);
+  return res.data;
+};
+
+// Update Product
+const updateProduct = async (id, formData) => {
+  const res = await axios.patch(`${API_URL}${id}`, formData);
   return res.data;
 };
 
@@ -32,6 +38,7 @@ const productService = {
   getProducts,
   deleteProduct,
   getProduct,
+  updateProduct,
 };
 
 export default productService;
